@@ -1,0 +1,25 @@
+name: Sync File
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天 00:00 运行
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Remove all files
+        run: |
+          rm -rf *
+          
+      - name: Fetch file
+        run: |
+          git config --global user.email "2625719372@qq.com"
+          git config --global user.name "blackice"
+          git remote add source https://github.com/Jsnzkpg/Jsnzkpg.git
+          git fetch source
+          git checkout source/master -- Jsnzkpg
+          git add Jsnzkpg
+          git commit -m "Update file"
+          git push
